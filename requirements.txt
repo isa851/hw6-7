@@ -26,7 +26,6 @@ daphne==4.2.1
 dj-rest-auth==7.1.1
 Django==5.2.10
 django-allauth==65.14.3
-django-channels==0.7.0
 django-filter==25.2
 djangorestframework==3.16.1
 djangorestframework_simplejwt==5.5.1

@@ -1,7 +1,6 @@
 services:
   web:
     build: .
-    container_name: drf_web
     command: sh -c "python manage.py migrate && daphne -b 0.0.0.0 -p 8000 core.asgi:application"
     ports:
       - "8000:8000"
@@ -16,11 +15,9 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: drf_redis
 
   celery_worker:
     build: .
-    container_name: drf_celery_worker
     command: celery -A core worker -l info
     env_file:
       - .env
@@ -32,7 +29,6 @@ services:
 
   celery_beat:
     build: .
-    container_name: drf_celery_beat
     command: celery -A core beat -l info
     env_file:
       - .env
