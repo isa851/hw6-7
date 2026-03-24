@@ -44,11 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "django.contrib.sites",
 
+    "channels",
     # rest
     'rest_framework',
     'django_filters',
     "rest_framework.authtoken",
-    "channels",
     'drf_yasg',
     "rest_framework_simplejwt.token_blacklist",
     "dj_rest_auth",
@@ -167,9 +167,15 @@ CACHES = {
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
-    }
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [
+                os.environ.get("CHANNEL_LAYER_REDIS_URL", os.environ.get("REDIS_URL", "redis://localhost:6379/2"))
+            ],
+        },
+    },
 }
+
 
 from datetime import timedelta
 
@@ -195,8 +201,8 @@ SIMPLE_JWT = {
 
 AUTH_USER_MODEL = 'users.User'
 
-CELERY_BROKER_URL = "redis://redis:6379/0"
-CELERY_RESULT_BACKEND = "redis://redis:6379/1"
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", os.environ.get("REDIS_URL", "redis://localhost:6379/0"))
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", os.environ.get("REDIS_RESULT_URL", "redis://localhost:6379/1"))
 
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"

@@ -25,5 +25,9 @@ class Notification(models.Model):
     class Meta:
         ordering = ("-id",)
 
+    @property
+    def created_at(self):
+        return self.ctreated_at
+
     def __str__(self):
         return self.type

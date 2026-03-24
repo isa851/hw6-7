@@ -23,7 +23,6 @@ class NotificationReadAPI(ViewSet):
         notif.is_read = True
         notif.save(update_fields=["is_read"])
         
-        # Send WebSocket notification about read status
         from channels.layers import get_channel_layer
         from asgiref.sync import async_to_sync
         
@@ -33,13 +32,14 @@ class NotificationReadAPI(ViewSet):
             "id": notif.id,
             "is_read": notif.is_read,
         }
-        
-        async_to_sync(channel_layer.group_send)(
-            f"notifications_{request.user.id}",
-            {
-                "type": "send_notification",
-                "notification": notification_data
-            }
-        )
+
+        if channel_layer is not None:
+            async_to_sync(channel_layer.group_send)(
+                f"notifications_{request.user.id}",
+                {
+                    "type": "send_notification",
+                    "data": notification_data,
+                }
+            )
         
         return Response({"ok": True}, status=status.HTTP_200_OK)
