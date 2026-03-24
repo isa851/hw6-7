@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "django.contrib.sites",
 
-    "channels",
     # rest
     'rest_framework',
     'django_filters',

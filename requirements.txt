@@ -1,14 +1,25 @@
 Django==5.2.10
+
 djangorestframework==3.16.1
-django-filter==25.2
-
-django-allauth==65.14.3
-dj-rest-auth==7.1.1
 djangorestframework_simplejwt==5.5.1
-
+django-filter==25.2
 drf-yasg==1.21.14
+dj-rest-auth==7.1.1
+django-allauth==65.14.3
 
 Pillow==12.1.0
+
+channels==4.3.1
+daphne==4.2.1
+
 python-dotenv==1.2.1
 
-gunicorn==22.0.0
+asgiref==3.11.0
+sqlparse==0.5.5
+typing_extensions==4.15.0
+
+# если используешь JWT / auth
+PyJWT==2.11.0
+
+# channels-redis==4.2.0
+# redis==7.2.1
